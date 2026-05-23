@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCC Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ol:#4a5e2a;--ol-d:#2d3a18;--ol-l:#6b8a3a;--ol-m:#394822;
+  --gold:#c9a84c;--gold-l:#e8c96a;--gold-d:#7a6530;
+  --red:#c0392b;--red-d:#4a1515;
+  --green:#27ae60;--green-d:#173a22;
+  --amber:#e67e22;--amber-d:#4a2a08;
+  --blue:#2980b9;--blue-d:#12304a;
+  --bg:#0f1208;--sf:#181e0c;--sf2:#1e2610;--br:#2a3515;
+  --tx:#d8d0b5;--mu:#72785a;--fa:#2a3018;
+  --sw:240px;
+}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--tx);height:100vh;display:flex;overflow:hidden;}
+
+/* ═══ SIDEBAR ═══ */
+.sb{width:var(--sw);min-width:var(--sw);background:var(--ol-d);border-right:1px solid var(--br);display:flex;flex-direction:column;height:100vh;overflow-y:auto;}
+.sb-hd{padding:18px 14px 14px;border-bottom:1px solid var(--br);}
+.sb-logo{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:3px;color:var(--gold);display:flex;align-items:center;gap:9px;}
+.sb-shield{width:30px;height:30px;background:var(--ol-m);border:1.5px solid var(--gold-d);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-shield svg{width:16px;height:16px;fill:var(--gold);}
+.sb-user{margin-top:10px;padding:9px 11px;background:rgba(0,0,0,.25);border-radius:3px;display:flex;align-items:center;gap:9px;}
+.u-av{width:34px;height:34px;border-radius:50%;background:var(--ol);border:2px solid var(--gold-d);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:.9rem;color:var(--gold);flex-shrink:0;}
+.u-nm{font-weight:700;font-size:.85rem;color:#f0e8d0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.u-rl{font-size:.65rem;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;}
+.sb-nav{flex:1;padding:10px 0;}
+.ns{padding:7px 14px 3px;font-size:.6rem;letter-spacing:2.5px;color:var(--mu);text-transform:uppercase;}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 14px;cursor:pointer;border-left:3px solid transparent;transition:all .15s;font-size:.92rem;font-weight:600;color:var(--mu);position:relative;user-select:none;}
+.ni:hover{background:rgba(255,255,255,.04);color:var(--tx);}
+.ni.active{background:rgba(201,168,76,.1);border-left-color:var(--gold);color:var(--gold);}
+.ni svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;}
+.nb{position:absolute;right:10px;background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:.6rem;font-weight:700;font-family:'Space Mono',monospace;min-width:18px;text-align:center;}
+.sb-ft{padding:11px 14px;border-top:1px solid var(--br);}
+.lo-btn{width:100%;padding:8px;background:transparent;border:1px solid var(--br);border-radius:3px;color:var(--mu);font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .2s;}
+.lo-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ═══ MAIN ═══ */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+.topbar{background:var(--sf);border-bottom:1px solid var(--br);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.pg-title{font-family:'Bebas Neue',cursive;font-size:1.55rem;letter-spacing:3px;color:var(--gold);}
+.date-chip{background:var(--ol-m);border:1px solid var(--br);border-radius:3px;padding:4px 10px;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--ol-l);}
+.content{flex:1;overflow-y:auto;padding:20px;}
+
+/* ═══ STAT CARDS ═══ */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.sc{background:var(--sf2);border:1px solid var(--br);border-radius:4px;padding:18px 18px 16px;position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);}
+.sc.g::before{background:var(--green);}
+.sc.a::before{background:var(--amber);}
+.sc.r::before{background:var(--red);}
+.sc.b::before{background:var(--blue);}
+.sn{font-family:'Bebas Neue',cursive;font-size:2.4rem;color:var(--gold);line-height:1;}
+.sc.g .sn{color:var(--green);}
+.sc.a .sn{color:var(--amber);}
+.sc.r .sn{color:var(--red);}
+.sc.b .sn{color:var(--blue);}
+.sl{font-size:.7rem;letter-spacing:1.5px;color:var(--mu);text-transform:uppercase;margin-top:3px;}
+.si{position:absolute;right:14px;top:14px;opacity:.12;}
+.si svg{width:36px;height:36px;fill:var(--tx);}
+
+/* ═══ SECTION ═══ */
+.sec{background:var(--sf2);border:1px solid var(--br);border-radius:4px;margin-bottom:18px;}
+.sec-hd{padding:13px 18px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.sec-tt{font-family:'Bebas Neue',cursive;font-size:1.15rem;letter-spacing:2px;color:var(--gold);}
+.sec-body{padding:16px 18px;}
+
+/* ═══ BUTTONS ═══ */
+.btn{padding:7px 14px;border-radius:3px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;border:1px solid;transition:all .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;}
+.btn-p{background:var(--ol);border-color:var(--ol-l);color:#f0e8d0;}
+.btn-p:hover{background:var(--ol-l);}
+.btn-g{background:transparent;border-color:var(--gold-d);color:var(--gold);}
+.btn-g:hover{background:rgba(201,168,76,.1);}
+.btn-r{background:transparent;border-color:rgba(192,57,43,.5);color:var(--red);}
+.btn-r:hover{background:rgba(192,57,43,.1);}
+.btn-gr{background:transparent;border-color:rgba(39,174,96,.5);color:var(--green);}
+.btn-gr:hover{background:rgba(39,174,96,.1);}
+.btn-am{background:transparent;border-color:rgba(230,126,34,.5);color:var(--amber);}
+.btn-am:hover{background:rgba(230,126,34,.1);}
+.btn-sm{padding:4px 9px;font-size:.72rem;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ═══ TABLE ═══ */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{padding:9px 14px;text-align:left;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);border-bottom:1px solid var(--br);white-space:nowrap;background:var(--sf);}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.03);font-size:.88rem;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.text-center{text-align:center;}
+
+/* ═══ BADGES ═══ */
+.rb{padding:2px 8px;border-radius:2px;font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.rb.ANO{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid var(--gold-d);}
+.rb.CC{background:rgba(39,174,96,.12);color:var(--green);border:1px solid rgba(39,174,96,.3);}
+.rb.LC{background:rgba(74,94,42,.2);color:var(--ol-l);border:1px solid var(--br);}
+.rb.Cadet{background:rgba(139,115,85,.12);color:#a09070;border:1px solid rgba(139,115,85,.3);}
+.rnk{background:var(--ol-d);border:1px solid var(--br);border-radius:2px;padding:2px 7px;font-size:.72rem;color:var(--ol-l);}
+.plt{background:rgba(201,168,76,.08);border:1px solid var(--gold-d);border-radius:2px;padding:2px 7px;font-size:.72rem;color:var(--gold-d);}
+.rs{padding:2px 8px;border-radius:2px;font-size:.65rem;font-weight:700;letter-spacing:1px;font-family:'Space Mono',monospace;}
+.rs.pending{background:rgba(230,126,34,.12);color:var(--amber);border:1px solid rgba(230,126,34,.3);}
+.rs.approved{background:rgba(39,174,96,.12);color:var(--green);border:1px solid rgba(39,174,96,.3);}
+.rs.rejected{background:rgba(192,57,43,.12);color:var(--red);border:1px solid rgba(192,57,43,.3);}
+
+/* ═══ ATT BUTTONS ═══ */
+.att-grp{display:flex;gap:3px;}
+.att-btn{width:30px;height:26px;border-radius:2px;cursor:pointer;font-size:.7rem;font-weight:700;font-family:'Space Mono',monospace;border:1px solid;transition:all .1s;}
+.att-btn.P{background:var(--green-d);border-color:var(--green);color:var(--green);}
+.att-btn.P.on{background:var(--green);color:#fff;}
+.att-btn.A{background:var(--red-d);border-color:var(--red);color:var(--red);}
+.att-btn.A.on{background:var(--red);color:#fff;}
+.att-btn.L{background:var(--amber-d);border-color:var(--amber);color:var(--amber);}
+.att-btn.L.on{background:var(--amber);color:#fff;}
+.st-P{color:var(--green);font-weight:700;font-family:'Space Mono',monospace;}
+.st-A{color:var(--red);font-weight:700;font-family:'Space Mono',monospace;}
+.st-L{color:var(--amber);font-weight:700;font-family:'Space Mono',monospace;}
+.st--{color:var(--mu);font-family:'Space Mono',monospace;}
+
+/* ═══ PROGRESS ═══ */
+.pb{height:7px;background:var(--fa);border-radius:4px;overflow:hidden;flex:1;}
+.pf{height:100%;border-radius:4px;transition:width .6s ease;}
+.pct{font-family:'Space Mono',monospace;font-size:.7rem;min-width:38px;}
+
+/* ═══ MODAL ═══ */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.mo{background:var(--sf2);border:1px solid var(--br);border-radius:4px;padding:26px;min-width:380px;max-width:540px;width:92%;position:relative;max-height:88vh;overflow-y:auto;}
+.mo-tt{font-family:'Bebas Neue',cursive;font-size:1.35rem;letter-spacing:3px;color:var(--gold);margin-bottom:18px;}
+.mo-x{position:absolute;top:11px;right:13px;background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:1.1rem;line-height:1;}
+.mo-x:hover{color:var(--red);}
+.mo-act{display:flex;gap:9px;justify-content:flex-end;margin-top:18px;}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.fg label{font-size:.67rem;letter-spacing:2px;text-transform:uppercase;color:var(--mu);}
+.fi,.fs,.fta{background:var(--bg);border:1px solid var(--br);border-radius:3px;color:var(--tx);padding:9px 12px;font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:600;outline:none;transition:border-color .2s;width:100%;}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--gold);}
+.fs option{background:var(--sf2);}
+.fta{resize:vertical;min-height:78px;}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg-full{grid-column:1/-1;}
+
+/* ═══ ANN ═══ */
+.ann{background:var(--sf);border:1px solid var(--br);border-radius:3px;padding:14px;margin-bottom:10px;position:relative;}
+.ann::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--ol-l);border-radius:2px 0 0 2px;}
+.ann-t{font-weight:700;font-size:.96rem;color:#f0e8d0;margin-bottom:5px;}
+.ann-b{font-size:.86rem;color:var(--mu);line-height:1.5;}
+.ann-m{display:flex;align-items:center;gap:8px;margin-top:7px;}
+.ann-d{font-size:.72rem;font-family:'Space Mono',monospace;color:var(--mu);}
+.ann-a{font-size:.72rem;color:var(--gold-d);}
+.ann-del{position:absolute;top:9px;right:10px;background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:.9rem;}
+.ann-del:hover{color:var(--red);}
+
+/* ═══ PROFILE ═══ */
+.pav{width:76px;height:76px;border-radius:50%;background:var(--ol);border:3px solid var(--gold-d);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:1.9rem;color:var(--gold);flex-shrink:0;}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.dk{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:2px;}
+.dv{font-size:.92rem;font-weight:700;color:#f0e8d0;}
+
+/* ═══ FREEZE NOTICE ═══ */
+.ntc{padding:9px 13px;border-radius:3px;margin-bottom:14px;font-size:.84rem;display:flex;align-items:center;gap:8px;}
+.ntc.info{background:rgba(74,94,42,.12);border:1px solid var(--br);color:var(--mu);}
+.ntc.warn{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);color:#e08080;}
+.ntc.amber{background:rgba(230,126,34,.1);border:1px solid rgba(230,126,34,.3);color:var(--amber);}
+
+/* ═══ UTIL ═══ */
+.flex{display:flex;}.gap-1{gap:4px;}.gap-2{gap:8px;}.gap-3{gap:12px;}.items-c{align-items:center;}.j-b{justify-content:space-between;}.flex-1{flex:1;}.wrap{flex-wrap:wrap;}
+.mt1{margin-top:4px;}.mt2{margin-top:8px;}.mt3{margin-top:12px;}.mt4{margin-top:16px;}
+.mu{color:var(--mu);}.gold{color:var(--gold);}.gr{color:var(--green);}.rd{color:var(--red);}.am{color:var(--amber);}
+.xs{font-size:.72rem;}.sm{font-size:.84rem;}.mono{font-family:'Space Mono',monospace;}
+.bold{font-weight:700;}.upper{text-transform:uppercase;}.ls{letter-spacing:1px;}
+.hidden{display:none!important;}
+.emp{padding:40px;text-align:center;color:var(--mu);font-size:.88rem;}
+.sb-wrap{background:var(--sf);border:1px solid var(--br);border-radius:3px;padding:8px 12px;}
+.search{background:var(--bg);border:1px solid var(--br);border-radius:3px;padding:7px 11px;color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:.88rem;outline:none;width:200px;}
+.search:focus{border-color:var(--gold);}
+.cr-card{background:var(--sf);border:1px solid var(--br);border-radius:3px;padding:13px;margin-bottom:9px;}
+</style>
+</head>
+<body>
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sb" id="sb">
+  <div class="sb-hd">
+    <div class="sb-logo">
+      <div class="sb-shield"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1z"/></svg></div>
+      NCC PORTAL
+    </div>
+    <div class="sb-user">
+      <div class="u-av" id="sb-av">?</div>
+      <div style="flex:1;min-width:0">
+        <div class="u-nm" id="sb-nm">—</div>
+        <div class="u-rl" id="sb-rl">—</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sb-nav" id="sb-nav"></nav>
+  <div class="sb-ft"><button class="lo-btn" onclick="logout()">⏻ &nbsp;Logout</button></div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main">
+  <div class="topbar">
+    <div class="pg-title" id="pg-tt">DASHBOARD</div>
+    <div class="date-chip" id="dt-chip"></div>
+  </div>
+  <div class="content" id="content"><div class="emp">Loading…</div></div>
+</div>
+
+<!-- ══════════ MODAL ══════════ -->
+<div class="ov hidden" id="ov" onclick="ovClick(event)">
+  <div class="mo" id="mo">
+    <button class="mo-x" onclick="closeModal()">✕</button>
+    <div id="mo-body"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+const S = { user:null, cadets:[], users:[], cm:{}, attState:{records:{},frozen:false,date:''} };
+
+// ═══════════════════════════════════════════════════════════════════
+// ICONS SVG
+// ═══════════════════════════════════════════════════════════════════
+const IC = {
+  grid:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
+  users:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+  cal:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  chart:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
+  bell:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>`,
+  user:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  flag:`<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+};
+
+const NAV = [
+  {id:'dashboard',  label:'Dashboard',       roles:['ANO','CC','LC','Cadet'], icon:'grid',   sec:'MAIN'},
+  {id:'cadets',     label:'Cadet Register',   roles:['ANO','CC','LC','Cadet'], icon:'users',  sec:'MAIN'},
+  {id:'attendance', label:'Attendance',       roles:['ANO','CC'],              icon:'cal',    sec:'MAIN'},
+  {id:'report',     label:'Att. Report',      roles:['ANO','CC','LC','Cadet'], icon:'chart',  sec:'MAIN'},
+  {id:'announce',   label:'Announcements',    roles:['ANO','CC','LC','Cadet'], icon:'bell',   sec:'MAIN'},
+  {id:'profile',    label:'My Profile',       roles:['ANO','CC','LC','Cadet'], icon:'user',   sec:'ACCOUNT'},
+  {id:'users',      label:'User Management',  roles:['ANO'],                   icon:'shield', sec:'ADMIN'},
+  {id:'changreq',   label:'Change Requests',  roles:['ANO','CC'],              icon:'flag',   sec:'ADMIN'},
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════
+async function init(){
+  const r = await api('/api/session');
+  if(!r.logged_in){window.location='/login';return;}
+  S.user = r;
+  document.getElementById('sb-av').textContent = ini(r.name);
+  document.getElementById('sb-nm').textContent = r.name;
+  document.getElementById('sb-rl').textContent = r.role;
+  document.getElementById('dt-chip').textContent = new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  buildNav();
+  go('dashboard');
+  setInterval(refreshBadge, 20000);
+}
+function ini(n){return (n||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+
+// ═══════════════════════════════════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════════════════════════════════
+function buildNav(){
+  let h='', ls='';
+  NAV.forEach(item=>{
+    if(!item.roles.includes(S.user.role)) return;
+    if(item.sec!==ls){h+=`<div class="ns">${item.sec}</div>`;ls=item.sec;}
+    const badge = (item.id==='changreq'&&S.user.role==='ANO') ? `<span class="nb hidden" id="nb-cr">0</span>` : '';
+    h+=`<div class="ni" id="ni-${item.id}" onclick="go('${item.id}')">${IC[item.icon]} ${item.label}${badge}</div>`;
+  });
+  document.getElementById('sb-nav').innerHTML=h;
+  refreshBadge();
+}
+
+async function refreshBadge(){
+  if(S.user.role!=='ANO') return;
+  try{
+    const d=await api('/api/change-requests/pending-count');
+    const b=document.getElementById('nb-cr');
+    if(b){b.textContent=d.count;b.classList.toggle('hidden',d.count===0);}
+  }catch(e){}
+}
+
+function go(page){
+  S.page=page;
+  document.querySelectorAll('.ni').forEach(e=>e.classList.remove('active'));
+  const el=document.getElementById('ni-'+page);
+  if(el) el.classList.add('active');
+  const titles={dashboard:'DASHBOARD',cadets:'CADET REGISTER',attendance:'ATTENDANCE',report:'ATTENDANCE REPORT',announce:'ANNOUNCEMENTS',profile:'MY PROFILE',users:'USER MANAGEMENT',changreq:'CHANGE REQUESTS'};
+  document.getElementById('pg-tt').textContent=titles[page]||page.toUpperCase();
+  ({dashboard:pgDash,cadets:pgCadets,attendance:pgAtt,report:pgReport,announce:pgAnnounce,profile:pgProfile,users:pgUsers,changreq:pgChangReq})[page]();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// API
+// ═══════════════════════════════════════════════════════════════════
+async function api(url,method='GET',body=null){
+  const o={method,headers:{'Content-Type':'application/json'}};
+  if(body) o.body=JSON.stringify(body);
+  const r=await fetch(url,o);
+  if(r.status===401){window.location='/login';throw new Error('Unauth');}
+  return r.json();
+}
+async function logout(){await api('/api/logout','POST');localStorage.removeItem('ncc_session');window.location='/login';}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function v(id){return (document.getElementById(id)||{}).value||'';}
+function e(s){if(!s) return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmtD(d){try{return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});}catch{return d;}}
+function openModal(){document.getElementById('ov').classList.remove('hidden');}
+function closeModal(){document.getElementById('ov').classList.add('hidden');}
+function ovClick(ev){if(ev.target===document.getElementById('ov'))closeModal();}
+function toast(msg,ok=true){
+  const t=document.createElement('div');
+  t.style.cssText=`position:fixed;bottom:20px;right:20px;z-index:9999;background:${ok?'var(--ol)':'var(--red)'};border:1px solid ${ok?'var(--ol-l)':'rgba(192,57,43,.5)'};color:#f0e8d0;padding:11px 18px;border-radius:4px;font-family:Rajdhani,sans-serif;font-size:.9rem;font-weight:700;animation:fadeUp .25s ease;box-shadow:0 6px 24px rgba(0,0,0,.4)`;
+  t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600);
+}
+function pctColor(p){return p>=75?'var(--green)':p>=50?'var(--amber)':'var(--red)';}
+
+function getSaturdays(n=8){
+  const arr=[];const d=new Date();
+  // up to n past saturdays + next saturday if today isn't saturday
+  for(let i=0;arr.length<n;i++){
+    const t=new Date(d);t.setDate(d.getDate()-i);
+    if(t.getDay()===6) arr.push(t.toISOString().slice(0,10));
+  }
+  // If today is not Saturday, prepend next Saturday
+  const today=new Date();
+  if(today.getDay()!==6){
+    const nxt=new Date(today);
+    while(nxt.getDay()!==6)nxt.setDate(nxt.getDate()+1);
+    arr.unshift(nxt.toISOString().slice(0,10));
+  }
+  return [...new Set(arr)];
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: DASHBOARD
+// ═══════════════════════════════════════════════════════════════════
+async function pgDash(){
+  const d=await api('/api/dashboard');
+  const pc=pctColor(d.avg_pct);
+  const role=S.user.role;
+  let h=`<div class="sg">
+    <div class="sc"><div class="si">${IC.users}</div><div class="sn">${d.total_cadets}</div><div class="sl">Total Cadets</div></div>
+    <div class="sc g"><div class="si">${IC.users}</div><div class="sn">${d.present_today}</div><div class="sl">Present Today</div></div>
+    <div class="sc ${d.avg_pct>=75?'g':d.avg_pct>=50?'a':'r'}"><div class="si">${IC.chart}</div><div class="sn">${d.avg_pct}%</div><div class="sl">Avg Attendance</div></div>
+    <div class="sc b"><div class="si">${IC.shield}</div><div class="sn">${d.active_users}</div><div class="sl">Active Users</div></div>
+  </div>`;
+  if(role==='ANO'&&d.pending_requests>0)
+    h+=`<div class="ntc amber">⚠ &nbsp;<strong>${d.pending_requests}</strong> pending change request(s) need your review. <span style="cursor:pointer;text-decoration:underline;color:var(--gold)" onclick="go('changreq')">Review →</span></div>`;
+  h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-tt">Quick Access</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        ${role!=='Cadet'?`<button class="btn btn-p" onclick="go('attendance')">${IC.cal} Take Attendance</button>`:''}
+        <button class="btn btn-g" onclick="go('cadets')">${IC.users} Cadet Register</button>
+        <button class="btn btn-g" onclick="go('report')">${IC.chart} Attendance Report</button>
+        <button class="btn btn-g" onclick="go('announce')">${IC.bell} Announcements</button>
+        ${role==='ANO'?`<button class="btn btn-g" onclick="go('users')">${IC.shield} User Management</button>`:''}
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-tt">Latest Announcements</div></div>
+      <div style="padding:12px" id="dash-ann"><div class="emp">Loading…</div></div>
+    </div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+  const anns=await api('/api/announcements');
+  const da=document.getElementById('dash-ann');
+  if(!anns.length){da.innerHTML='<div class="emp">No announcements yet.</div>';return;}
+  da.innerHTML=anns.slice(0,3).map(a=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--br)">
+      <div class="bold sm" style="color:#f0e8d0">${e(a.title)}</div>
+      <div class="mu xs mt1">${e(a.body).slice(0,90)}${a.body.length>90?'…':''}</div>
+      <div class="flex gap-2 mt1"><span class="ann-d">${a.date}</span><span class="ann-a">${e(a.author)}</span><span class="rb ${a.role}">${a.role}</span></div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: CADETS
+// ═══════════════════════════════════════════════════════════════════
+async function pgCadets(){
+  S.cadets=await api('/api/cadets');
+  S.cadets.forEach(c=>S.cm[c.id]=c);
+  const role=S.user.role;
+  const canEdit=['ANO','CC'].includes(role);
+  let h=`<div class="sec">
+    <div class="sec-hd">
+      <div class="sec-tt">Cadet Register</div>
+      <div class="flex gap-2 items-c">
+        <input class="search" id="csrch" placeholder="Search name, rank, platoon…" oninput="filterCadets()">
+        ${canEdit?`<button class="btn btn-p" onclick="cadetModal()">+ Add Cadet</button>`:''}
+      </div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Cadet ID</th><th>Name</th><th>Rank</th><th>Platoon</th><th>Contact</th><th>Blood Grp</th><th>Joined</th>
+        ${canEdit?'<th>Actions</th>':''}
+      </tr></thead>
+      <tbody id="ctb"></tbody>
+    </table></div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+  renderCadetRows(S.cadets);
+}
+
+function renderCadetRows(cadets){
+  const role=S.user.role;
+  const canEdit=['ANO','CC'].includes(role);
+  const canDel=role==='ANO';
+  const tb=document.getElementById('ctb');
+  if(!cadets.length){tb.innerHTML=`<tr><td colspan="9" class="emp">No cadets found.</td></tr>`;return;}
+  tb.innerHTML=cadets.map((c,i)=>`<tr>
+    <td class="mu xs">${i+1}</td>
+    <td><code style="font-size:.72rem;color:var(--ol-l)">${e(c.service_number)}</code></td>
+    <td><strong>${e(c.name)}</strong></td>
+    <td><span class="rnk">${e(c.rank)}</span></td>
+    <td><span class="plt">${e(c.platoon)}</span></td>
+    <td class="xs mono">${e(c.contact||'—')}</td>
+    <td class="xs" style="color:var(--red)">${e(c.blood_group||'—')}</td>
+    <td class="xs mu">${c.joined||'—'}</td>
+    ${canEdit?`<td><div class="flex gap-1">
+      <button class="btn btn-g btn-sm" onclick='cadetModal(${JSON.stringify(c)})'>Edit</button>
+      ${canDel?`<button class="btn btn-r btn-sm" onclick="delCadet('${c.id}')">Del</button>`:''}
+    </div></td>`:''}
+  </tr>`).join('');
+}
+
+function filterCadets(){
+  const q=document.getElementById('csrch').value.toLowerCase();
+  renderCadetRows(S.cadets.filter(c=>[c.name,c.service_number,c.rank,c.platoon].join(' ').toLowerCase().includes(q)));
+}
+
+function cadetModal(c=null){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">${c?'Edit Cadet':'Add Cadet'}</div>
+    <div class="fg2">
+      <div class="fg fg-full"><label>Full Name *</label><input class="fi" id="f-nm" value="${e(c?.name||'')}"></div>
+      <div class="fg"><label>Service / Cadet ID *</label><input class="fi" id="f-sv" value="${e(c?.service_number||'')}"></div>
+      <div class="fg"><label>Rank</label><select class="fs" id="f-rk">
+        ${['Cadet','Lance Corporal','Corporal','Sergeant','Company Sergeant Major','Under Officer','Senior Under Officer','Cadet Captain'].map(r=>`<option ${c?.rank===r?'selected':''}>${r}</option>`).join('')}
+      </select></div>
+      <div class="fg"><label>Platoon</label><select class="fs" id="f-pl">
+        ${['Alpha','Bravo','Charlie','Delta'].map(p=>`<option ${c?.platoon===p?'selected':''}>${p}</option>`).join('')}
+      </select></div>
+      <div class="fg"><label>Contact</label><input class="fi" id="f-ct" value="${e(c?.contact||'')}"></div>
+      <div class="fg"><label>Email</label><input class="fi" id="f-em" value="${e(c?.email||'')}"></div>
+      <div class="fg"><label>Blood Group</label><select class="fs" id="f-bg">
+        ${['','A+','A-','B+','B-','AB+','AB-','O+','O-'].map(b=>`<option ${c?.blood_group===b?'selected':''}>${b}</option>`).join('')}
+      </select></div>
+      <div class="fg"><label>Date Joined</label><input class="fi" type="date" id="f-jd" value="${c?.joined||''}"></div>
+    </div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="saveCadet('${c?.id||''}')">Save Cadet</button>
+    </div>`;
+  openModal();
+}
+
+async function saveCadet(id){
+  const nm=v('f-nm').trim();const sv=v('f-sv').trim();
+  if(!nm||!sv){toast('Name and Service Number are required',false);return;}
+  const body={name:nm,service_number:sv,rank:v('f-rk'),platoon:v('f-pl'),contact:v('f-ct'),email:v('f-em'),blood_group:v('f-bg'),joined:v('f-jd')};
+  const r=id?await api(`/api/cadets/${id}`,'PUT',body):await api('/api/cadets','POST',body);
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast(id?'Cadet updated':'Cadet added');pgCadets();
+}
+
+async function delCadet(id){
+  if(!confirm('Permanently delete this cadet?')) return;
+  const r=await api(`/api/cadets/${id}`,'DELETE');
+  if(r.error){toast(r.error,false);return;}
+  toast('Cadet deleted');pgCadets();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: ATTENDANCE
+// ═══════════════════════════════════════════════════════════════════
+async function pgAtt(){
+  S.cadets=await api('/api/cadets');
+  S.cadets.forEach(c=>S.cm[c.id]=c);
+  const sats=getSaturdays(8);
+  let h=`<div class="sec">
+    <div class="sec-hd">
+      <div class="sec-tt">Saturday Parade Attendance</div>
+      <select class="fs" id="att-dt" onchange="loadAtt()" style="width:auto">
+        ${sats.map(d=>`<option value="${d}">${fmtD(d)} (Sat)</option>`).join('')}
+      </select>
+    </div>
+    <div id="att-notice"></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Cadet ID</th><th>Name</th><th>Rank</th><th>Platoon</th><th>Status</th></tr></thead>
+      <tbody id="att-tb"></tbody>
+    </table></div>
+    <div style="padding:14px 18px;display:flex;gap:10px;justify-content:flex-end" id="att-acts"></div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+  await loadAtt();
+}
+
+async function loadAtt(){
+  const dt=v('att-dt')||document.getElementById('att-dt')?.value;
+  if(!dt) return;
+  const d=await api(`/api/attendance/${dt}`);
+  S.attState={date:dt, records:{...(d.records||{})}, frozen:!!d.frozen};
+  renderAttRows();
+}
+
+function renderAttRows(){
+  const role=S.user.role;
+  const {frozen,records,date}=S.attState;
+  const canEdit=(role==='ANO')||(role==='CC'&&!frozen);
+
+  // Notice bar
+  const ntc=document.getElementById('att-notice');
+  ntc.style.padding='0 18px';
+  ntc.innerHTML=frozen
+    ? `<div class="ntc warn">🔒 Attendance frozen for this date. ${role==='ANO'?'<button class="btn btn-sm btn-g" style="margin-left:8px" onclick="unfreeze()">Unfreeze</button>':role==='CC'?'Use "Request Change" to correct entries.':''}</div>`
+    : `<div class="ntc info">📋 Attendance open — mark P / A / L for each cadet then submit to freeze.</div>`;
+
+  // Rows
+  const tb=document.getElementById('att-tb');
+  tb.innerHTML=S.cadets.map((c,i)=>{
+    const cur=records[c.id]||'-';
+    let sc;
+    if(canEdit){
+      sc=`<div class="att-grp">
+        ${['P','A','L'].map(s=>`<button class="att-btn ${s} ${cur===s?'on':''}" onclick="setAtt('${c.id}','${s}',this)">${s}</button>`).join('')}
+      </div>`;
+    } else if(frozen&&role==='CC'){
+      sc=`<div class="flex gap-2 items-c">
+        <span class="st-${cur}">${cur}</span>
+        <button class="btn btn-am btn-sm" onclick="openCRModal('${c.id}','${e(c.name)}','${cur}','${date}')">Request Change</button>
+      </div>`;
+    } else {
+      sc=`<span class="st-${cur}">${cur}</span>`;
+    }
+    return `<tr>
+      <td class="mu xs">${i+1}</td>
+      <td><code style="font-size:.7rem;color:var(--ol-l)">${e(c.service_number)}</code></td>
+      <td><strong>${e(c.name)}</strong></td>
+      <td><span class="rnk">${e(c.rank)}</span></td>
+      <td><span class="plt">${e(c.platoon)}</span></td>
+      <td>${sc}</td>
+    </tr>`;
+  }).join('');
+
+  // Action buttons
+  const acts=document.getElementById('att-acts');
+  if(!frozen&&canEdit){
+    acts.innerHTML=`<button class="btn btn-g" onclick="saveAtt()">Save Draft</button><button class="btn btn-p" onclick="submitAtt()">Submit & Freeze</button>`;
+  } else if(role==='ANO'&&frozen){
+    acts.innerHTML=`<button class="btn btn-g" onclick="saveAtt()">Save ANO Changes</button>`;
+  } else { acts.innerHTML=''; }
+}
+
+function setAtt(cid,st,btn){
+  S.attState.records[cid]=st;
+  btn.closest('.att-grp').querySelectorAll('.att-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+async function saveAtt(){
+  const r=await api(`/api/attendance/${S.attState.date}`,'POST',{records:S.attState.records});
+  if(r.error){toast(r.error,false);return;}
+  toast('Attendance draft saved');
+}
+
+async function submitAtt(){
+  if(!confirm('Submit and freeze attendance? This cannot be directly edited afterwards.')) return;
+  const r=await api(`/api/attendance/${S.attState.date}/submit`,'POST',{records:S.attState.records});
+  if(r.error){toast(r.error,false);return;}
+  S.attState.frozen=true;renderAttRows();toast('Attendance submitted and frozen');
+}
+
+async function unfreeze(){
+  const r=await api(`/api/attendance/${S.attState.date}/unfreeze`,'POST');
+  if(r.error){toast(r.error,false);return;}
+  S.attState.frozen=false;renderAttRows();toast('Attendance unfrozen');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: ATTENDANCE REPORT
+// ═══════════════════════════════════════════════════════════════════
+async function pgReport(){
+  const d=await api('/api/attendance/report');
+  const {report,dates}=d;
+  if(!dates.length){document.getElementById('content').innerHTML='<div class="emp">No attendance sessions recorded yet.</div>';return;}
+  let h=`<div class="sec">
+    <div class="sec-hd"><div class="sec-tt">Attendance Report</div><div class="mu xs">${dates.length} session(s) recorded</div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>Name</th><th>Rank</th><th>Platoon</th>
+        ${dates.map(d=>`<th class="text-center mono" style="font-size:.6rem">${d.slice(5)}</th>`).join('')}
+        <th>P</th><th>A</th><th>L</th><th>Sessions</th><th style="min-width:130px">Attendance %</th>
+      </tr></thead>
+      <tbody>
+        ${report.map(r=>{
+          const pc=r.pct;const clr=pctColor(pc);
+          return `<tr>
+            <td><strong>${e(r.cadet.name)}</strong></td>
+            <td><span class="rnk">${e(r.cadet.rank)}</span></td>
+            <td><span class="plt">${e(r.cadet.platoon)}</span></td>
+            ${dates.map(dt=>`<td class="text-center"><span class="st-${r.records[dt]||'-'}">${r.records[dt]||'-'}</span></td>`).join('')}
+            <td class="gr bold mono xs">${r.present}</td>
+            <td class="rd mono xs">${r.absent}</td>
+            <td class="am mono xs">${r.leave}</td>
+            <td class="mu mono xs">${r.total}</td>
+            <td>
+              <div class="flex items-c gap-2">
+                <span class="pct" style="color:${clr}">${pc}%</span>
+                <div class="pb"><div class="pf" style="width:${pc}%;background:${clr}"></div></div>
+              </div>
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: ANNOUNCEMENTS
+// ═══════════════════════════════════════════════════════════════════
+async function pgAnnounce(){
+  const anns=await api('/api/announcements');
+  const role=S.user.role;
+  const canPost=['ANO','CC'].includes(role);
+  let h=`<div style="display:grid;grid-template-columns:1fr${canPost?' 310px':''};gap:16px;align-items:start">
+    <div class="sec">
+      <div class="sec-hd"><div class="sec-tt">Notice Board</div><div class="mu xs">${anns.length} notice(s)</div></div>
+      <div style="padding:14px" id="ann-list">
+        ${anns.length?anns.map(a=>annCard(a,role)).join(''):'<div class="emp">No announcements yet.</div>'}
+      </div>
+    </div>
+    ${canPost?`<div class="sec">
+      <div class="sec-hd"><div class="sec-tt">Post Notice</div></div>
+      <div style="padding:14px">
+        <div class="fg"><label>Title</label><input class="fi" id="an-t" placeholder="Announcement title"></div>
+        <div class="fg"><label>Body</label><textarea class="fta" id="an-b" placeholder="Details…"></textarea></div>
+        <button class="btn btn-p" style="width:100%;margin-top:4px" onclick="postAnn()">Post Announcement</button>
+      </div>
+    </div>`:''}
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+function annCard(a,role){
+  const canDel=['ANO','CC'].includes(role);
+  return `<div class="ann">
+    <div class="flex items-c gap-2" style="margin-bottom:5px"><span class="rb ${a.role}">${a.role}</span><div class="ann-t">${e(a.title)}</div></div>
+    <div class="ann-b">${e(a.body)}</div>
+    <div class="ann-m"><span class="ann-d">${a.date}</span><span class="ann-a">— ${e(a.author)}</span></div>
+    ${canDel?`<button class="ann-del" onclick="delAnn('${a.id}')" title="Delete">✕</button>`:''}
+  </div>`;
+}
+
+async function postAnn(){
+  const t=v('an-t').trim(),b=v('an-b').trim();
+  if(!t||!b){toast('Title and body are required',false);return;}
+  const r=await api('/api/announcements','POST',{title:t,body:b});
+  if(r.error){toast(r.error,false);return;}
+  toast('Announcement posted');pgAnnounce();
+}
+
+async function delAnn(id){
+  if(!confirm('Delete this announcement?')) return;
+  await api(`/api/announcements/${id}`,'DELETE');
+  toast('Deleted');pgAnnounce();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: PROFILE
+// ═══════════════════════════════════════════════════════════════════
+async function pgProfile(){
+  const role=S.user.role;
+  const cadets=await api('/api/cadets');
+  const cadet=cadets.find(c=>c.id===S.user.cadet_id)||null;
+  const rep=await api('/api/attendance/report');
+  const my=cadet?rep.report.find(r=>r.cadet.id===cadet.id):null;
+  const av=ini(S.user.name);
+  let h=`<div style="display:grid;grid-template-columns:280px 1fr;gap:16px">
+    <div>
+      <div class="sec" style="margin-bottom:14px">
+        <div style="padding:22px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+          <div class="pav">${av}</div>
+          <div>
+            <div style="font-family:'Bebas Neue',cursive;font-size:1.3rem;color:#f0e8d0">${e(S.user.name)}</div>
+            <div class="mt1"><span class="rb ${role}">${role}</span></div>
+          </div>
+        </div>
+        ${cadet?`<div style="padding:0 18px 18px">
+          <div class="dg">
+            <div><div class="dk">Service No.</div><div class="dv mono" style="font-size:.75rem">${e(cadet.service_number)}</div></div>
+            <div><div class="dk">Rank</div><div class="dv">${e(cadet.rank)}</div></div>
+            <div><div class="dk">Platoon</div><div class="dv">${e(cadet.platoon)}</div></div>
+            <div><div class="dk">Blood Group</div><div class="dv rd">${e(cadet.blood_group||'—')}</div></div>
+            <div><div class="dk">Contact</div><div class="dv xs">${e(cadet.contact||'—')}</div></div>
+            <div><div class="dk">Joined</div><div class="dv xs">${cadet.joined||'—'}</div></div>
+          </div>
+        </div>`:``}
+      </div>
+    </div>
+    <div>
+      ${my?`<div class="sec" style="margin-bottom:14px">
+        <div class="sec-hd"><div class="sec-tt">Attendance Summary</div></div>
+        <div style="padding:16px;display:flex;gap:28px">
+          <div><div class="sn" style="color:${pctColor(my.pct)}">${my.pct}%</div><div class="sl">Overall</div></div>
+          <div><div class="sn gr">${my.present}</div><div class="sl">Present</div></div>
+          <div><div class="sn rd">${my.absent}</div><div class="sl">Absent</div></div>
+          <div><div class="sn am">${my.leave}</div><div class="sl">Leave</div></div>
+          <div><div class="sn mu">${my.total}</div><div class="sl">Sessions</div></div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sec-hd"><div class="sec-tt">Attendance History</div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            ${Object.entries(my.records).sort((a,b)=>b[0].localeCompare(a[0])).map(([d,s])=>`
+              <tr><td class="mono xs">${d}</td><td><span class="st-${s}">${s}</span></td></tr>`).join('')}
+          </tbody>
+        </table></div>
+      </div>`:
+      `<div class="emp">No cadet record linked to your account.</div>`}
+    </div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: USERS
+// ═══════════════════════════════════════════════════════════════════
+async function pgUsers(){
+  S.users=await api('/api/users');
+  S.cadets=await api('/api/cadets');
+  S.cadets.forEach(c=>S.cm[c.id]=c);
+  let h=`<div class="sec">
+    <div class="sec-hd"><div class="sec-tt">User Management</div><button class="btn btn-p" onclick="userModal()">+ Add User</button></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Linked Cadet</th><th>Actions</th></tr></thead>
+      <tbody id="utb"></tbody>
+    </table></div>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+  const tb=document.getElementById('utb');
+  if(!S.users.length){tb.innerHTML=`<tr><td colspan="7" class="emp">No users.</td></tr>`;return;}
+  tb.innerHTML=S.users.map((u,i)=>{
+    const lk=S.cm[u.cadet_id];
+    return `<tr>
+      <td class="mu xs">${i+1}</td>
+      <td><strong>${e(u.name)}</strong></td>
+      <td class="mono xs">${e(u.username)}</td>
+      <td><span class="rb ${u.role}">${u.role}</span></td>
+      <td class="xs mu">${e(u.email||'—')}</td>
+      <td>${lk?`<span class="plt">${e(lk.name)}</span>`:'—'}</td>
+      <td><div class="flex gap-1">
+        <button class="btn btn-g btn-sm" onclick='userModal(${JSON.stringify(u)})'>Edit</button>
+        <button class="btn btn-am btn-sm" onclick="resetPwdModal('${u.id}','${e(u.name)}')">Pwd</button>
+        <button class="btn btn-r btn-sm" onclick="delUser('${u.id}')">Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function userModal(u=null){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">${u?'Edit User':'Add User'}</div>
+    <div class="fg2">
+      <div class="fg"><label>Full Name</label><input class="fi" id="u-nm" value="${e(u?.name||'')}"></div>
+      <div class="fg"><label>Username *</label><input class="fi" id="u-un" value="${e(u?.username||'')}"></div>
+      <div class="fg"><label>Role</label><select class="fs" id="u-rl">
+        ${['ANO','CC','LC','Cadet'].map(r=>`<option ${u?.role===r?'selected':''}>${r}</option>`).join('')}
+      </select></div>
+      <div class="fg"><label>Email</label><input class="fi" id="u-em" value="${e(u?.email||'')}"></div>
+      ${!u?`<div class="fg"><label>Password *</label><input class="fi" id="u-pw" placeholder="Set initial password"></div>`:''}
+      <div class="fg fg-full"><label>Link to Cadet Record</label><select class="fs" id="u-cd">
+        <option value="">— None —</option>
+        ${S.cadets.map(c=>`<option value="${c.id}" ${u?.cadet_id===c.id?'selected':''}>${e(c.name)} — ${e(c.service_number)}</option>`).join('')}
+      </select></div>
+    </div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="saveUser('${u?.id||''}')">Save User</button>
+    </div>`;
+  openModal();
+}
+
+async function saveUser(id){
+  const un=v('u-un').trim();
+  if(!un){toast('Username is required',false);return;}
+  const body={name:v('u-nm'),username:un,role:v('u-rl'),email:v('u-em'),cadet_id:v('u-cd')||null};
+  if(!id) body.password=v('u-pw')||'ncc123';
+  const r=id?await api(`/api/users/${id}`,'PUT',body):await api('/api/users','POST',body);
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast(id?'User updated':'User created');pgUsers();
+}
+
+async function delUser(id){
+  if(!confirm('Delete this user?')) return;
+  const r=await api(`/api/users/${id}`,'DELETE');
+  if(r.error){toast(r.error,false);return;}
+  toast('User deleted');pgUsers();
+}
+
+function resetPwdModal(id,name){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">Reset Password</div>
+    <div class="ntc info" style="margin-bottom:14px">Resetting password for: <strong>${e(name)}</strong></div>
+    <div class="fg"><label>New Password</label><input class="fi" id="np" placeholder="Enter new password"></div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="doReset('${id}')">Reset</button>
+    </div>`;
+  openModal();
+}
+
+async function doReset(id){
+  const p=v('np').trim();
+  if(!p){toast('Enter a password',false);return;}
+  const r=await api(`/api/users/${id}/reset-password`,'POST',{password:p});
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast('Password reset successfully');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE: CHANGE REQUESTS
+// ═══════════════════════════════════════════════════════════════════
+async function pgChangReq(){
+  S.cadets=await api('/api/cadets');
+  S.cadets.forEach(c=>S.cm[c.id]=c);
+  const role=S.user.role;
+  const reqs=await api('/api/change-requests');
+  const pending=reqs.filter(r=>r.status==='pending');
+  const done=reqs.filter(r=>r.status!=='pending');
+
+  let h=`<div class="sec">
+    <div class="sec-hd">
+      <div class="sec-tt">Change Requests</div>
+      ${role==='CC'?`<button class="btn btn-p" onclick="newCRModal()">+ New Request</button>`:''}
+    </div>
+    <div style="padding:14px">`;
+
+  if(role==='ANO'&&pending.length)
+    h+=`<div class="ntc amber" style="margin-bottom:12px">⚠ ${pending.length} pending request(s) awaiting review.</div>`;
+
+  if(pending.length){
+    h+=`<div class="bold sm gold upper ls" style="margin-bottom:9px">Pending</div>`;
+    h+=pending.map(r=>crCard(r,role)).join('');
+  }
+  if(done.length){
+    h+=`<div class="bold sm mu upper ls" style="margin:${pending.length?16:0}px 0 9px">Reviewed</div>`;
+    h+=done.map(r=>crCard(r,role)).join('');
+  }
+  if(!reqs.length) h+=`<div class="emp">No change requests found.</div>`;
+  h+=`</div></div>`;
+  document.getElementById('content').innerHTML=h;
+  refreshBadge();
+}
+
+function crCard(r,role){
+  const cadet=S.cm[r.cadet_id];
+  const nm=cadet?cadet.name:r.cadet_name||r.cadet_id;
+  return `<div class="cr-card">
+    <div class="flex j-b items-c" style="margin-bottom:7px">
+      <div class="flex gap-2 items-c">
+        <span class="rs ${r.status}">${r.status.toUpperCase()}</span>
+        <strong>${e(nm)}</strong>
+        <span class="mono xs mu">${r.date}</span>
+      </div>
+      <span class="xs mu">${(r.created_at||'').slice(0,16)}</span>
+    </div>
+    <div class="sm" style="margin-bottom:6px">
+      Change: <span class="st-${r.old_status}">${r.old_status}</span>
+      → <span class="st-${r.new_status}">${r.new_status}</span>
+      &nbsp;|&nbsp; Reason: <em class="mu">${e(r.reason||'—')}</em>
+    </div>
+    <div class="xs mu">Requested by: ${e(r.requested_by)}</div>
+    ${r.rejection_note?`<div class="xs rd mt1">Rejection note: ${e(r.rejection_note)}</div>`:''}
+    ${role==='ANO'&&r.status==='pending'?`<div class="flex gap-2 mt2">
+      <button class="btn btn-gr btn-sm" onclick="approveReq('${r.id}')">✓ Approve</button>
+      <button class="btn btn-r btn-sm" onclick="rejectModal('${r.id}')">✕ Reject</button>
+    </div>`:''}
+  </div>`;
+}
+
+function openCRModal(cid,cname,oldSt,date){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">Request Attendance Change</div>
+    <div class="ntc info" style="margin-bottom:12px">Cadet: <strong>${e(cname)}</strong> &nbsp;|&nbsp; Date: <strong>${date}</strong></div>
+    <div class="fg2">
+      <div class="fg"><label>Current Status</label>
+        <div class="fi" style="cursor:default"><span class="st-${oldSt}">${oldSt}</span></div>
+      </div>
+      <div class="fg"><label>Requested Status</label>
+        <select class="fs" id="cr-ns">
+          ${['P','A','L'].filter(s=>s!==oldSt).map(s=>`<option>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div class="fg fg-full"><label>Reason / Note *</label>
+        <textarea class="fta" id="cr-rs" placeholder="Explain the reason for this correction…"></textarea>
+      </div>
+    </div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="submitCR('${cid}','${e(cname)}','${oldSt}','${date}')">Submit Request</button>
+    </div>`;
+  openModal();
+}
+
+function newCRModal(){
+  const sats=getSaturdays(8);
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">New Change Request</div>
+    <div class="fg2">
+      <div class="fg fg-full"><label>Cadet</label>
+        <select class="fs" id="cr-cd">
+          ${S.cadets.map(c=>`<option value="${c.id}|${e(c.name)}">${e(c.name)} — ${e(c.service_number)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="fg"><label>Date</label>
+        <select class="fs" id="cr-dt">${sats.map(d=>`<option>${d}</option>`).join('')}</select>
+      </div>
+      <div class="fg"><label>Current Status</label>
+        <select class="fs" id="cr-os">${['P','A','L','-'].map(s=>`<option>${s}</option>`).join('')}</select>
+      </div>
+      <div class="fg"><label>Requested Status</label>
+        <select class="fs" id="cr-ns">${['P','A','L'].map(s=>`<option>${s}</option>`).join('')}</select>
+      </div>
+      <div class="fg fg-full"><label>Reason *</label>
+        <textarea class="fta" id="cr-rs" placeholder="Reason for the change…"></textarea>
+      </div>
+    </div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="submitNewCR()">Submit</button>
+    </div>`;
+  openModal();
+}
+
+async function submitNewCR(){
+  const [cid,cnm]=v('cr-cd').split('|');
+  const date=v('cr-dt'),os=v('cr-os'),ns=v('cr-ns'),rs=v('cr-rs').trim();
+  const r=await api('/api/change-requests','POST',{cadet_id:cid,cadet_name:cnm,date,old_status:os,new_status:ns,reason:rs});
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast('Request submitted to ANO');pgChangReq();
+}
+
+async function submitCR(cid,cname,oldSt,date){
+  const ns=v('cr-ns'),rs=v('cr-rs').trim();
+  if(!rs){toast('Please provide a reason',false);return;}
+  const r=await api('/api/change-requests','POST',{cadet_id:cid,cadet_name:cname,date,old_status:oldSt,new_status:ns,reason:rs});
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast('Change request submitted');
+}
+
+async function approveReq(id){
+  if(!confirm('Approve this change request? The attendance record will be updated.')) return;
+  const r=await api(`/api/change-requests/${id}/approve`,'POST');
+  if(r.error){toast(r.error,false);return;}
+  toast('Request approved and attendance updated');pgChangReq();
+}
+
+function rejectModal(id){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mo-tt">Reject Request</div>
+    <div class="fg"><label>Rejection Note (optional)</label>
+      <textarea class="fta" id="rn" placeholder="Reason for rejection…"></textarea>
+    </div>
+    <div class="mo-act">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-r" onclick="doReject('${id}')">Reject</button>
+    </div>`;
+  openModal();
+}
+
+async function doReject(id){
+  const r=await api(`/api/change-requests/${id}/reject`,'POST',{note:v('rn')});
+  if(r.error){toast(r.error,false);return;}
+  closeModal();toast('Request rejected');pgChangReq();
+}
+
+// ══════ START ══════
+init();
+</script>
+<style>@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}</style>
+</body>
+</html>
